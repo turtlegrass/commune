@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Commune Work — Coworking at Rose Apple Square</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #211F3D;
+    --indigo: #3C3D7D;
+    --indigo-deep: #2B2C5C;
+    --periwinkle: #736AB0;
+    --periwinkle-deep: #5F5798;
+    --periwinkle-pale: #EDEBF7;
+    --cream: #FFF9EF;
+    --cream-deep: #FFEFDB;
+    --lime: #B4D334;
+    --lime-deep: #97B023;
+    --telegram: #29A9EA;
+    --whatsapp: #25D366;
+    --white: #FFFFFF;
+    --text-muted: #6E6A93;
+    --border: #DAD5EC;
+    --focus-ring: #B4D334;
+    --error: #C0392B;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', Arial, sans-serif;
+    color: var(--ink);
+    background: var(--periwinkle);
+  }
+
+  h1, h2, .display {
+    font-family: 'Jost', 'Inter', Arial, sans-serif;
+  }
+
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible,
+  select:focus-visible {
+    outline: 3px solid var(--focus-ring);
+    outline-offset: 2px;
+  }
+
+  /* ---------- HEADER ---------- */
+  .site-header {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    background: var(--indigo-deep);
+    padding: 20px 40px;
+  }
+
+  .logo {
+    color: #fff;
+    line-height: 1.15;
+    justify-self: start;
+    font-family: 'Jost', sans-serif;
+  }
+
+  .logo .logo-main { font-size: 21px; font-weight: 500; letter-spacing: 3px; }
+  .logo .logo-sub { font-size: 10px; font-weight: 400; letter-spacing: 1px; opacity: 0.75; text-transform: uppercase; }
+
+  .main-nav { display: flex; gap: 40px; justify-self: center; font-family: 'Jost', sans-serif; }
+
+  .main-nav a {
+    position: relative;
+    color: #fff;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    padding: 4px 2px;
+  }
+
+  .main-nav a::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0; bottom: -4px;
+    height: 2px;
+    background: var(--lime);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.2s ease;
+  }
+
+  .main-nav a:hover::after,
+  .main-nav a:focus-visible::after,
+  .main-nav a[aria-current="page"]::after { transform: scaleX(1); }
+
+  .main-nav a.nav-gather { font-style: italic; font-weight: 400; }
+
+  .header-cta { justify-self: end; }
+
+  .venue-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--lime);
+    color: var(--indigo-deep);
+    text-decoration: none;
+    font-family: 'Jost', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 9px 16px;
+    border-radius: 999px;
+    transition: background 0.15s ease, transform 0.15s ease;
+  }
+
+  .venue-button:hover, .venue-button:focus-visible {
+    background: var(--lime-deep);
+    color: #fff;
+    transform: translateY(-1px);
+  }
+
+  /* ---------- PAGE HERO — sits directly on the purple field ---------- */
+  .page-hero {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 64px 24px 40px;
+    text-align: center;
+    color: #fff;
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Jost', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--lime);
+    margin-bottom: 18px;
+  }
+
+  .eyebrow .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--lime);
+  }
+
+  .page-hero h1 {
+    font-size: clamp(28px, 4.2vw, 42px);
+    font-weight: 500;
+    letter-spacing: 0.2px;
+    line-height: 1.2;
+    margin-bottom: 16px;
+  }
+
+  .page-hero p {
+    font-size: 16px;
+    line-height: 1.7;
+    color: #E7E5F5;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  /* ---------- MAIN — single column, chat card on top ---------- */
+  .work-main {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 8px 24px 90px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  /* ---------- CHAT CARD (on top) ---------- */
+  .chat-card {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 32px 30px;
+  }
+
+  .chat-card h2 {
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+
+  .chat-card .chat-sub {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 22px;
+  }
+
+  .chat-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 22px;
+  }
+
+  .chat-button {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    text-decoration: none;
+    color: var(--ink);
+    font-size: 14px;
+    font-weight: 600;
+    transition: border-color 0.15s ease, transform 0.15s ease;
+  }
+
+  .chat-button:hover, .chat-button:focus-visible {
+    border-color: var(--periwinkle);
+    transform: translateY(-2px);
+  }
+
+  .chat-button .chat-icon-wrap {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .chat-button .chat-icon-wrap.telegram { background: var(--telegram); }
+  .chat-button .chat-icon-wrap.whatsapp { background: var(--whatsapp); }
+
+  .chat-button .chat-icon { width: 17px; height: 17px; }
+
+  .chat-button .chat-label { display: flex; flex-direction: column; gap: 2px; }
+  .chat-button .chat-label small {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-muted);
+  }
+
+  .response-note {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    background: var(--periwinkle-pale);
+    border-radius: 10px;
+    padding: 16px;
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--ink);
+  }
+
+  .response-note .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--lime-deep);
+    margin-top: 6px;
+    flex-shrink: 0;
+  }
+
+  .response-note a { color: var(--indigo); font-weight: 600; }
+
+  /* ---------- FORM CARD (below) ---------- */
+  .form-card {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 32px 30px;
+  }
+
+  .form-card h2 {
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+
+  .form-card .form-sub {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+
+  .field { margin-bottom: 20px; }
+
+  .field label {
+    display: block;
+    font-family: 'Jost', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+
+  .field .optional {
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: 0;
+  }
+
+  .field input,
+  .field select,
+  .field textarea {
+    width: 100%;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    padding: 9px 2px;
+    border: none;
+    border-bottom: 1.5px solid var(--border);
+    border-radius: 0;
+    background: transparent;
+    color: var(--ink);
+  }
+
+  .field textarea {
+    resize: vertical;
+    min-height: 100px;
+    border: 1.5px solid var(--border);
+    padding: 12px;
+    border-radius: 8px;
+  }
+
+  .field input:focus,
+  .field select:focus,
+  .field textarea:focus {
+    border-color: var(--periwinkle);
+  }
+
+  .field .error-text {
+    display: none;
+    color: var(--error);
+    font-size: 12px;
+    margin-top: 6px;
+  }
+
+  .field.has-error input,
+  .field.has-error select,
+  .field.has-error textarea {
+    border-color: var(--error);
+  }
+
+  .field.has-error .error-text { display: block; }
+
+  .submit-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--indigo);
+    color: #fff;
+    border: none;
+    font-family: 'Jost', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 14px 30px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background 0.15s ease, transform 0.15s ease;
+  }
+
+  .submit-button:hover, .submit-button:focus-visible {
+    background: var(--indigo-deep);
+    transform: translateY(-1px);
+  }
+
+  .submit-button:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+  .form-status {
+    margin-top: 18px;
+    font-size: 14px;
+    padding: 12px 14px;
+    border-radius: 8px;
+    display: none;
+  }
+
+  .form-status.success { display: block; background: #EEF4E0; color: var(--lime-deep); }
+  .form-status.error { display: block; background: #FBEAE7; color: var(--error); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .chat-button, .submit-button, .venue-button, .main-nav a::after { transition: none; }
+  }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 800px) {
+    .site-header {
+      grid-template-columns: 1fr;
+      justify-items: center;
+      gap: 14px;
+      padding: 16px 20px;
+    }
+    .logo { justify-self: center; text-align: center; }
+    .main-nav { gap: 24px; }
+    .header-cta { justify-self: center; }
+  }
+
+  @media (max-width: 560px) {
+    .chat-buttons { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .main-nav a { font-size: 13px; }
+    .chat-card, .form-card { padding: 26px 20px; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- ================= HEADER ================= -->
+  <header class="site-header">
+    <div class="logo">
+      <div class="logo-main">COMMUNE</div>
+      <div class="logo-sub">at Rose Apple Square</div>
+    </div>
+
+    <nav class="main-nav" aria-label="Primary">
+      <a href="/live">LIVE</a>
+      <a href="/work" aria-current="page">WORK</a>
+      <a href="/gather" class="nav-gather">GATHER</a>
+    </nav>
+
+    <div class="header-cta">
+      <a href="/gather" class="venue-button">Book our venue</a>
+    </div>
+  </header>
+
+  <!-- ================= PAGE HERO ================= -->
+  <section class="page-hero">
+    <div class="eyebrow"><span class="dot" aria-hidden="true"></span>Commune Work</div>
+    <h1>Let's get you set up in the space</h1>
+    <p>Message us directly for a fast reply, or send your details below and a member of the team will follow up the same day.</p>
+  </section>
+
+  <!-- ================= MAIN CONTENT ================= -->
+  <main class="work-main">
+
+    <!-- ---- Chat card: Telegram / WhatsApp — on top ---- -->
+    <section class="chat-card">
+      <h2>Chat with us</h2>
+      <p class="chat-sub">The fastest way to reach the Work team. We're online during business hours and reply the same day.</p>
+
+      <div class="chat-buttons">
+        <!-- DEV: replace href with the real Telegram deep link, e.g. https://t.me/communework -->
+        <a href="https://t.me/communework" class="chat-button" target="_blank" rel="noopener noreferrer">
+          <span class="chat-icon-wrap telegram">
+            <svg class="chat-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M21.9 4.3 3.6 11.4c-1.2.5-1.2 1.2-.2 1.5l4.7 1.5 1.8 5.5c.2.6.4.8.9.8.4 0 .6-.2.9-.5l2.1-2 4.4 3.2c.8.5 1.4.2 1.6-.7l2.9-13.6c.3-1.2-.4-1.7-1.4-1.3Z" fill="#fff"/>
+            </svg>
+          </span>
+          <span class="chat-label">Telegram<small>@communework</small></span>
+        </a>
+
+        <!-- DEV: replace href with the real WhatsApp click-to-chat link, e.g. https://wa.me/85512345678 -->
+        <a href="https://wa.me/85512345678" class="chat-button" target="_blank" rel="noopener noreferrer">
+          <span class="chat-icon-wrap whatsapp">
+            <svg class="chat-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 2a10 10 0 0 0-8.6 15l-1.1 4 4.2-1.1A10 10 0 1 0 12 2Zm5.7 14.2c-.2.7-1.4 1.3-2 1.4-.5.1-1.2.2-3.7-.8-3.1-1.3-5.1-4.4-5.3-4.6-.2-.2-1.3-1.7-1.3-3.2s.8-2.3 1.1-2.6c.3-.3.6-.4.8-.4h.6c.2 0 .5 0 .7.6l.9 2.2c.1.2.1.4 0 .6l-.5.7c-.1.2-.3.4 0 .8.3.5 1.2 1.4 2.1 2.1.6.5 1 .7 1.3.5l.5-.6c.2-.3.4-.2.6-.1l2 1c.2.1.4.2.5.3.1.2.1 1-.2 1.7Z" fill="#fff"/>
+            </svg>
+          </span>
+          <span class="chat-label">WhatsApp<small>+855 12 345 678</small></span>
+        </a>
+      </div>
+
+      <div class="response-note">
+        <span class="dot" aria-hidden="true"></span>
+        <span>Work enquiries get a same-day response. Planning an event or booking instead? Use <a href="/gather">Gather</a> — those requests are reviewed within 24–48 hours.</span>
+      </div>
+    </section>
+
+    <!-- ---- Contact form — below ---- -->
+    <section class="form-card">
+      <h2>Send us your details</h2>
+      <p class="form-sub">Prefer email? Fill this out and we'll get back to you the same day.</p>
+
+      <!--
+        DEV NOTE — wiring this form to actually send an email:
+        A static HTML form has no server behind it, so it cannot send email
+        on its own. Two standard options:
+
+          1. Form backend service (fastest to ship): point the fetch() call
+             below at a service like Formspree, Getform, or Basin. They
+             accept a POST of the form fields and forward them to your inbox.
+             No backend code required — just an endpoint URL and API key.
+
+          2. Your own endpoint: stand up a small serverless function
+             (e.g. on Vercel/Netlify/Cloud Functions) that receives the POST
+             body below and sends the email via a transactional provider
+             (SendGrid, Postmark, SES). More control, more setup.
+
+        Either way, only the FORM_ENDPOINT constant in the script below
+        needs to change. A mailto: fallback is included in case JS fails.
+      -->
+      <form id="work-form" novalidate>
+        <div class="form-row">
+          <div class="field" id="field-name">
+            <label for="name">Full name</label>
+            <input type="text" id="name" name="name" autocomplete="name" required>
+            <div class="error-text">Please enter your name.</div>
+          </div>
+
+          <div class="field" id="field-email">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" autocomplete="email" required>
+            <div class="error-text">Please enter a valid email address.</div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="field" id="field-phone">
+            <label for="phone">Phone <span class="optional">(optional)</span></label>
+            <input type="tel" id="phone" name="phone" autocomplete="tel">
+          </div>
+
+          <div class="field" id="field-interest">
+            <label for="interest">I'm interested in</label>
+            <select id="interest" name="interest" required>
+              <option value="">Select one</option>
+              <option value="hot-desk">Hot desk</option>
+              <option value="dedicated-desk">Dedicated desk</option>
+              <option value="private-office">Private office</option>
+              <option value="day-pass">Day pass</option>
+              <option value="other">Something else</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field" id="field-message">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" required placeholder="Tell us a bit about what you're looking for — team size, start date, anything else useful."></textarea>
+          <div class="error-text">Please add a short message so we know how to help.</div>
+        </div>
+
+        <button type="submit" class="submit-button" id="submit-button">Send message</button>
+
+        <div class="form-status" id="form-status" role="status" aria-live="polite"></div>
+      </form>
+    </section>
+
+  </main>
+
+  <script>
+    // DEV: swap this for your real form backend or serverless endpoint (see DEV NOTE above).
+    const FORM_ENDPOINT = "https://example.com/api/work-enquiry";
+    const FALLBACK_EMAIL = "work@communekh.com";
+
+    const form = document.getElementById("work-form");
+    const submitButton = document.getElementById("submit-button");
+    const statusBox = document.getElementById("form-status");
+
+    function setFieldError(fieldId, hasError) {
+      document.getElementById(fieldId).classList.toggle("has-error", hasError);
+    }
+
+    function validate(data) {
+      let valid = true;
+
+      if (!data.name.trim()) { setFieldError("field-name", true); valid = false; }
+      else setFieldError("field-name", false);
+
+      const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email.trim());
+      if (!emailOk) { setFieldError("field-email", true); valid = false; }
+      else setFieldError("field-email", false);
+
+      if (!data.message.trim()) { setFieldError("field-message", true); valid = false; }
+      else setFieldError("field-message", false);
+
+      return valid;
+    }
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(form).entries());
+
+      if (!validate(data)) {
+        statusBox.className = "form-status error";
+        statusBox.textContent = "Please fix the highlighted fields and try again.";
+        return;
+      }
+
+      submitButton.disabled = true;
+      submitButton.textContent = "Sending…";
+      statusBox.className = "form-status";
+      statusBox.textContent = "";
+
+      try {
+        const response = await fetch(FORM_ENDPOINT, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        });
+        if (!response.ok) throw new Error("Request failed");
+
+        statusBox.className = "form-status success";
+        statusBox.textContent = "Thanks — we've got your message and will reply the same day.";
+        form.reset();
+      } catch (err) {
+        const subject = encodeURIComponent("Work enquiry from " + data.name);
+        const body = encodeURIComponent(
+          "Name: " + data.name +
+          "\nEmail: " + data.email +
+          "\nPhone: " + (data.phone || "-") +
+          "\nInterested in: " + (data.interest || "-") +
+          "\n\n" + data.message
+        );
+        statusBox.className = "form-status error";
+        statusBox.innerHTML = 'We couldn\'t reach our server. <a href="mailto:' + FALLBACK_EMAIL + '?subject=' + subject + '&body=' + body + '" style="color:inherit;text-decoration:underline;">Click here to send this by email instead</a>.';
+      } finally {
+        submitButton.disabled = false;
+        submitButton.textContent = "Send message";
+      }
+    });
+  </script>
+
+</body>
+</html>
