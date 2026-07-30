@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Commune Gather — Book Our Venue</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #211F3D;
+    --indigo: #3C3D7D;
+    --indigo-deep: #2B2C5C;
+    --periwinkle: #736AB0;
+    --periwinkle-pale: #EDEBF7;
+    --lavender: #FFFFFF;
+    --lime: #B4D334;
+    --lime-deep: #97B023;
+    --white: #FFFFFF;
+    --text-muted: #6E6A93;
+    --border: #E2DEF0;
+    --focus-ring: #B4D334;
+    --error: #C0392B;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', Arial, sans-serif;
+    color: var(--ink);
+    background: var(--lavender);
+  }
+
+  h1, h2, .display { font-family: 'Jost', 'Inter', Arial, sans-serif; }
+
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible,
+  select:focus-visible {
+    outline: 3px solid var(--focus-ring);
+    outline-offset: 2px;
+  }
+
+  /* ---------- HEADER ---------- */
+  .site-header {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    background: var(--indigo-deep);
+    padding: 20px 40px;
+  }
+
+  .logo { color: #fff; line-height: 1.15; justify-self: start; font-family: 'Jost', sans-serif; }
+  .logo .logo-main { font-size: 21px; font-weight: 500; letter-spacing: 3px; }
+  .logo .logo-sub { font-size: 10px; font-weight: 400; letter-spacing: 1px; opacity: 0.75; text-transform: uppercase; }
+
+  .main-nav { display: flex; gap: 40px; justify-self: center; font-family: 'Jost', sans-serif; }
+
+  .main-nav a {
+    position: relative;
+    color: #fff;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    padding: 4px 2px;
+  }
+
+  .main-nav a::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0; bottom: -4px;
+    height: 2px;
+    background: var(--lime);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.2s ease;
+  }
+
+  .main-nav a:hover::after,
+  .main-nav a:focus-visible::after,
+  .main-nav a[aria-current="page"]::after { transform: scaleX(1); }
+
+  .main-nav a.nav-gather { font-style: italic; font-weight: 400; }
+
+  .header-cta { justify-self: end; visibility: hidden; }
+  /* CTA hidden on Gather's own page — the whole page already is that action */
+
+  /* ---------- HERO ---------- */
+  .page-hero {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 64px 24px 36px;
+    text-align: center;
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Jost', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--lime-deep);
+    margin-bottom: 18px;
+  }
+
+  .eyebrow .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--lime); }
+
+  .page-hero h1 {
+    font-size: clamp(28px, 4.2vw, 42px);
+    font-weight: 500;
+    letter-spacing: 0.2px;
+    line-height: 1.2;
+    margin-bottom: 16px;
+    color: var(--ink);
+  }
+
+  .page-hero p {
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--text-muted);
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  .review-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px;
+    background: var(--periwinkle-pale);
+    color: var(--indigo);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: 999px;
+  }
+
+  .review-badge .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--lime-deep); }
+
+  /* ---------- MAIN ---------- */
+  .gather-main {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 8px 24px 90px;
+  }
+
+  .form-card {
+    background: var(--white);
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--lime);
+    padding: 36px 32px;
+  }
+
+  .form-section + .form-section {
+    margin-top: 34px;
+    padding-top: 30px;
+    border-top: 1px solid var(--border);
+  }
+
+  .section-label {
+    font-family: 'Jost', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--periwinkle);
+    margin-bottom: 18px;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+
+  .form-row.three { grid-template-columns: 1fr 1fr 1fr; }
+
+  .field { margin-bottom: 20px; }
+
+  .field label {
+    display: block;
+    font-family: 'Jost', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+
+  .field .optional { font-weight: 400; text-transform: none; letter-spacing: 0; }
+
+  .field input,
+  .field select,
+  .field textarea {
+    width: 100%;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    padding: 9px 2px;
+    border: none;
+    border-bottom: 1.5px solid var(--border);
+    border-radius: 0;
+    background: transparent;
+    color: var(--ink);
+  }
+
+  .field textarea {
+    resize: vertical;
+    min-height: 110px;
+    border: 1.5px solid var(--border);
+    padding: 12px;
+    border-radius: 8px;
+  }
+
+  .field input:focus,
+  .field select:focus,
+  .field textarea:focus {
+    border-color: var(--periwinkle);
+  }
+
+  .field .hint {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 6px;
+  }
+
+  .field .error-text {
+    display: none;
+    color: var(--error);
+    font-size: 12px;
+    margin-top: 6px;
+  }
+
+  .field.has-error input,
+  .field.has-error select,
+  .field.has-error textarea { border-color: var(--error); }
+  .field.has-error .error-text { display: block; }
+
+  /* ---------- Checkbox group (add-ons) ---------- */
+  .checkbox-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 4px;
+  }
+
+  .checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+
+  .checkbox-item:has(input:checked) {
+    border-color: var(--lime-deep);
+    background: #FAFCEF;
+  }
+
+  .checkbox-item input {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--lime-deep);
+  }
+
+  .submit-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--lime);
+    color: var(--indigo-deep);
+    border: none;
+    font-family: 'Jost', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 14px 30px;
+    border-radius: 999px;
+    cursor: pointer;
+    margin-top: 30px;
+    transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease;
+  }
+
+  .submit-button:hover, .submit-button:focus-visible {
+    background: var(--lime-deep);
+    color: #fff;
+    transform: translateY(-1px);
+  }
+
+  .submit-button:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+  .form-status {
+    margin-top: 18px;
+    font-size: 14px;
+    padding: 12px 14px;
+    border-radius: 8px;
+    display: none;
+  }
+
+  .form-status.success { display: block; background: #EEF4E0; color: var(--lime-deep); }
+  .form-status.error { display: block; background: #FBEAE7; color: var(--error); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .submit-button, .checkbox-item, .main-nav a::after { transition: none; }
+  }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 800px) {
+    .site-header {
+      grid-template-columns: 1fr;
+      justify-items: center;
+      gap: 14px;
+      padding: 16px 20px;
+    }
+    .logo { justify-self: center; text-align: center; }
+    .main-nav { gap: 24px; }
+    .header-cta { display: none; }
+  }
+
+  @media (max-width: 560px) {
+    .form-row, .form-row.three, .checkbox-grid { grid-template-columns: 1fr; }
+    .main-nav a { font-size: 13px; }
+    .form-card { padding: 26px 20px; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- ================= HEADER ================= -->
+  <header class="site-header">
+    <div class="logo">
+      <div class="logo-main">COMMUNE</div>
+      <div class="logo-sub">at Rose Apple Square</div>
+    </div>
+
+    <nav class="main-nav" aria-label="Primary">
+      <a href="/live">LIVE</a>
+      <a href="/work">WORK</a>
+      <a href="/gather" class="nav-gather" aria-current="page">GATHER</a>
+    </nav>
+
+    <div class="header-cta" aria-hidden="true">
+      <a href="/gather" class="venue-button">Book our venue</a>
+    </div>
+  </header>
+
+  <!-- ================= PAGE HERO ================= -->
+  <section class="page-hero">
+    <div class="eyebrow"><span class="dot" aria-hidden="true"></span>Commune Gather</div>
+    <h1>Book our venue for your next event</h1>
+    <p>Tell us about what you're planning and we'll check availability and fit. The more detail you give us, the faster we can confirm.</p>
+    <div class="review-badge"><span class="dot" aria-hidden="true"></span>Requests are reviewed within 24–48 hours</div>
+  </section>
+
+  <!-- ================= MAIN CONTENT ================= -->
+  <main class="gather-main">
+    <section class="form-card">
+
+      <!--
+        DEV NOTE — wiring this form to actually send an email:
+        Same approach as the /work form: a static HTML form can't send email
+        on its own. Point FORM_ENDPOINT (in the script below) at a form
+        backend service (Formspree, Getform, Basin) or your own serverless
+        endpoint. A mailto: fallback is included in case that call fails.
+      -->
+      <form id="gather-form" novalidate>
+
+        <!-- ---- Contact details ---- -->
+        <div class="form-section">
+          <div class="section-label">Your details</div>
+
+          <div class="form-row">
+            <div class="field" id="field-name">
+              <label for="name">Full name</label>
+              <input type="text" id="name" name="name" autocomplete="name" required>
+              <div class="error-text">Please enter your name.</div>
+            </div>
+
+            <div class="field" id="field-email">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" autocomplete="email" required>
+              <div class="error-text">Please enter a valid email address.</div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="field" id="field-phone">
+              <label for="phone">Phone</label>
+              <input type="tel" id="phone" name="phone" autocomplete="tel" required>
+              <div class="error-text">Please enter a phone number so we can follow up.</div>
+            </div>
+
+            <div class="field" id="field-organization">
+              <label for="organization">Organization <span class="optional">(optional)</span></label>
+              <input type="text" id="organization" name="organization" autocomplete="organization">
+            </div>
+          </div>
+        </div>
+
+        <!-- ---- Event details ---- -->
+        <div class="form-section">
+          <div class="section-label">Event details</div>
+
+          <div class="form-row">
+            <div class="field" id="field-event-type">
+              <label for="event-type">Event type</label>
+              <select id="event-type" name="event_type" required>
+                <option value="">Select one</option>
+                <option value="workshop">Workshop / class</option>
+                <option value="corporate">Corporate event</option>
+                <option value="private-party">Private party / celebration</option>
+                <option value="networking">Networking / meetup</option>
+                <option value="pop-up">Pop-up / market</option>
+                <option value="photo-film">Photo / film shoot</option>
+                <option value="other">Something else</option>
+              </select>
+            </div>
+
+            <div class="field" id="field-guests">
+              <label for="guests">Expected guest count</label>
+              <input type="number" id="guests" name="guests" min="1" required>
+            </div>
+          </div>
+
+          <div class="form-row three">
+            <div class="field" id="field-date">
+              <label for="event-date">Preferred date</label>
+              <input type="date" id="event-date" name="event_date" required>
+            </div>
+
+            <div class="field" id="field-start-time">
+              <label for="start-time">Start time</label>
+              <input type="time" id="start-time" name="start_time" required>
+            </div>
+
+            <div class="field" id="field-end-time">
+              <label for="end-time">End time</label>
+              <input type="time" id="end-time" name="end_time" required>
+            </div>
+          </div>
+
+          <div class="field" id="field-alt-date">
+            <label for="alt-date">Alternate date <span class="optional">(optional)</span></label>
+            <input type="date" id="alt-date" name="alt_date">
+            <div class="hint">Helps us confirm faster if your first choice isn't available.</div>
+          </div>
+        </div>
+
+        <!-- ---- Requirements ---- -->
+        <div class="form-section">
+          <div class="section-label">What you'll need</div>
+
+          <div class="field">
+            <label>Add-ons <span class="optional">(select all that apply)</span></label>
+            <div class="checkbox-grid">
+              <label class="checkbox-item"><input type="checkbox" name="addons" value="catering"> Catering</label>
+              <label class="checkbox-item"><input type="checkbox" name="addons" value="av"> AV / sound equipment</label>
+              <label class="checkbox-item"><input type="checkbox" name="addons" value="furniture"> Tables & chairs setup</label>
+              <label class="checkbox-item"><input type="checkbox" name="addons" value="decor"> Decor setup</label>
+              <label class="checkbox-item"><input type="checkbox" name="addons" value="alcohol"> Alcohol service</label>
+              <label class="checkbox-item"><input type="checkbox" name="addons" value="none"> None of these</label>
+            </div>
+          </div>
+
+          <div class="field" id="field-budget">
+            <label for="budget">Budget range <span class="optional">(optional)</span></label>
+            <select id="budget" name="budget">
+              <option value="">Prefer not to say</option>
+              <option value="under-200">Under $200</option>
+              <option value="200-500">$200 – $500</option>
+              <option value="500-1000">$500 – $1,000</option>
+              <option value="1000-plus">$1,000+</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- ---- Description ---- -->
+        <div class="form-section">
+          <div class="section-label">Tell us more</div>
+
+          <div class="field" id="field-message">
+            <label for="message">Event description</label>
+            <textarea id="message" name="message" required placeholder="What's the event, who's it for, and anything else that will help us review your request quickly."></textarea>
+            <div class="error-text">Please describe your event so we can review the request.</div>
+          </div>
+        </div>
+
+        <button type="submit" class="submit-button" id="submit-button">Submit request</button>
+
+        <div class="form-status" id="form-status" role="status" aria-live="polite"></div>
+      </form>
+    </section>
+  </main>
+
+  <script>
+    // DEV: swap this for your real form backend or serverless endpoint.
+    const FORM_ENDPOINT = "https://example.com/api/gather-request";
+    const FALLBACK_EMAIL = "gather@communekh.com";
+
+    const form = document.getElementById("gather-form");
+    const submitButton = document.getElementById("submit-button");
+    const statusBox = document.getElementById("form-status");
+
+    function setFieldError(fieldId, hasError) {
+      document.getElementById(fieldId).classList.toggle("has-error", hasError);
+    }
+
+    function validate(data) {
+      let valid = true;
+
+      if (!data.name.trim()) { setFieldError("field-name", true); valid = false; }
+      else setFieldError("field-name", false);
+
+      const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email.trim());
+      if (!emailOk) { setFieldError("field-email", true); valid = false; }
+      else setFieldError("field-email", false);
+
+      if (!data.phone || !data.phone.trim()) { setFieldError("field-phone", true); valid = false; }
+      else setFieldError("field-phone", false);
+
+      if (!data.event_type) { setFieldError("field-event-type", true); valid = false; }
+      else setFieldError("field-event-type", false);
+
+      if (!data.guests || Number(data.guests) < 1) { setFieldError("field-guests", true); valid = false; }
+      else setFieldError("field-guests", false);
+
+      if (!data.event_date) { setFieldError("field-date", true); valid = false; }
+      else setFieldError("field-date", false);
+
+      if (!data.start_time) { setFieldError("field-start-time", true); valid = false; }
+      else setFieldError("field-start-time", false);
+
+      if (!data.end_time) { setFieldError("field-end-time", true); valid = false; }
+      else setFieldError("field-end-time", false);
+
+      if (!data.message.trim()) { setFieldError("field-message", true); valid = false; }
+      else setFieldError("field-message", false);
+
+      return valid;
+    }
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData.entries());
+      data.addons = formData.getAll("addons");
+
+      if (!validate(data)) {
+        statusBox.className = "form-status error";
+        statusBox.textContent = "Please fix the highlighted fields and try again.";
+        return;
+      }
+
+      submitButton.disabled = true;
+      submitButton.textContent = "Submitting…";
+      statusBox.className = "form-status";
+      statusBox.textContent = "";
+
+      try {
+        const response = await fetch(FORM_ENDPOINT, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        });
+        if (!response.ok) throw new Error("Request failed");
+
+        statusBox.className = "form-status success";
+        statusBox.textContent = "Thanks — we've received your request and will follow up within 24–48 hours.";
+        form.reset();
+      } catch (err) {
+        const subject = encodeURIComponent("Venue request from " + data.name);
+        const body = encodeURIComponent(
+          "Name: " + data.name +
+          "\nEmail: " + data.email +
+          "\nPhone: " + data.phone +
+          "\nOrganization: " + (data.organization || "-") +
+          "\nEvent type: " + data.event_type +
+          "\nGuests: " + data.guests +
+          "\nDate: " + data.event_date + " (" + data.start_time + " - " + data.end_time + ")" +
+          "\nAlternate date: " + (data.alt_date || "-") +
+          "\nAdd-ons: " + (data.addons.length ? data.addons.join(", ") : "-") +
+          "\nBudget: " + (data.budget || "-") +
+          "\n\n" + data.message
+        );
+        statusBox.className = "form-status error";
+        statusBox.innerHTML = 'We couldn\'t reach our server. <a href="mailto:' + FALLBACK_EMAIL + '?subject=' + subject + '&body=' + body + '" style="color:inherit;text-decoration:underline;">Click here to send this by email instead</a>.';
+      } finally {
+        submitButton.disabled = false;
+        submitButton.textContent = "Submit request";
+      }
+    });
+  </script>
+
+</body>
+</html>
