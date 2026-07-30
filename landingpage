@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Commune at Rose Apple Square</title>
+<style>
+  :root {
+    --coral: #E8845C;
+    --coral-dark: #D9714A;
+    --coral-darker: #C4633A;
+    --navy: #2B2560;
+    --navy-light: #3D3670;
+    --cream: #FBF8F4;
+    --text-dark: #221F1A;
+    --focus-ring: #FFC978;
+    --green: #B4D334;
+    --green-dark: #97B023;
+    --indigo-deep: #2B2C5C;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    color: var(--text-dark);
+    background: var(--cream);
+  }
+
+  /* Consistent, visible focus state for all keyboard-navigable elements */
+  a:focus-visible,
+  button:focus-visible {
+    outline: 3px solid var(--focus-ring);
+    outline-offset: 2px;
+  }
+
+  /* ---------- HEADER ---------- */
+  /* 3-column grid (logo / nav / spacer) so the nav is truly centered
+     regardless of logo width — no magic-number spacer hack. */
+  .site-header {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    background: var(--coral);
+    padding: 18px 40px;
+  }
+
+  .logo {
+    color: #fff;
+    line-height: 1.1;
+    justify-self: start;
+  }
+
+  .logo .logo-main {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+
+  .logo .logo-sub {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    opacity: 0.9;
+  }
+
+  .main-nav {
+    display: flex;
+    gap: 40px;
+    justify-self: center;
+  }
+
+  .main-nav a {
+    position: relative;
+    color: #fff;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    padding: 4px 2px;
+  }
+
+  /* Underline hover cue — makes the nav feel interactive, not just styled text */
+  .main-nav a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -4px;
+    height: 2px;
+    background: #fff;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.2s ease;
+  }
+
+  .main-nav a:hover::after,
+  .main-nav a:focus-visible::after {
+    transform: scaleX(1);
+  }
+
+  .main-nav a.nav-gather {
+    font-style: italic;
+    font-weight: 500;
+  }
+
+  /* Gather's CTA — sits in the header's third grid column, right-aligned */
+  .header-cta {
+    justify-self: end;
+  }
+
+  .venue-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--green);
+    color: var(--indigo-deep);
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    padding: 9px 16px;
+    border-radius: 999px;
+    transition: background 0.15s ease, transform 0.15s ease;
+  }
+
+  .venue-button:hover,
+  .venue-button:focus-visible {
+    background: var(--green-dark);
+    color: #fff;
+    transform: translateY(-1px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .venue-button {
+      transition: none;
+    }
+  }
+
+  /* ---------- HERO SPLIT ---------- */
+  .hero-split {
+    display: flex;
+    min-height: 520px;
+  }
+
+  .hero-panel {
+    position: relative;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    min-height: 520px;
+    /* reset default <a> and <button> styling since this is a clickable block */
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    font: inherit;
+    color: inherit;
+  }
+
+  /*
+    DEV NOTE — swapping in real photography:
+      1. Remove the .img-placeholder element entirely.
+      2. Add <img class="hero-img" src="..." alt="..." loading="lazy"> as the
+         first child of .hero-panel, before .hero-overlay.
+      3. .hero-img should use: position:absolute; inset:0; width:100%;
+         height:100%; object-fit:cover; z-index:1.
+      4. Set an explicit width/height (or aspect-ratio) on the source <img>
+         to avoid layout shift while it loads.
+    The overlay + content already sit at z-index 2/3, so text stays legible
+    once the photo is in place. The hover zoom below targets .hero-img
+    automatically — no extra work needed once the class is added.
+  */
+  .img-placeholder {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: repeating-linear-gradient(
+      45deg,
+      #d8d3c8,
+      #d8d3c8 12px,
+      #cfc9bc 12px,
+      #cfc9bc 24px
+    );
+    transition: transform 0.4s ease;
+  }
+
+  .img-placeholder span {
+    background: rgba(255, 255, 255, 0.85);
+    padding: 6px 14px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #555;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* Subtle zoom on hover/focus so the whole-panel link reads as interactive */
+  .hero-panel:hover .img-placeholder,
+  .hero-panel:focus-visible .img-placeholder,
+  .hero-panel:hover .hero-img,
+  .hero-panel:focus-visible .hero-img {
+    transform: scale(1.04);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .img-placeholder,
+    .hero-img {
+      transition: none;
+    }
+  }
+
+  /* Dark scrim so overlaid text reads well on both placeholder and real photos */
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background: linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.35) 100%);
+    transition: background 0.2s ease;
+  }
+
+  .hero-panel:hover .hero-overlay,
+  .hero-panel:focus-visible .hero-overlay {
+    background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.45) 100%);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 3;
+    text-align: center;
+    color: #fff;
+  }
+
+  .hero-title {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 2px;
+    font-size: clamp(28px, 5vw, 52px);
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.25);
+  }
+
+  .hero-title .accent {
+    font-weight: 400;
+  }
+
+  /* CTA is a visual button inside the panel link. It's rendered as a <span>
+     (see markup note) so we never nest an <a> inside an <a>; the whole
+     panel is already the click target, and the pill communicates the action. */
+  .cta-button {
+    margin-top: 24px;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 24px;
+    border: none;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    transition: transform 0.15s ease, background 0.15s ease;
+  }
+
+  .hero-panel:hover .cta-button,
+  .hero-panel:focus-visible .cta-button {
+    transform: translateY(-2px);
+  }
+
+  .cta-button .arrow-circle {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    transition: transform 0.15s ease;
+  }
+
+  .hero-panel:hover .arrow-circle,
+  .hero-panel:focus-visible .arrow-circle {
+    transform: translateX(3px);
+  }
+
+  .cta-live {
+    background: var(--coral-dark);
+    color: #fff;
+  }
+
+  .hero-panel:hover .cta-live,
+  .hero-panel:focus-visible .cta-live {
+    background: var(--coral-darker);
+  }
+
+  .cta-work {
+    background: var(--navy);
+    color: #fff;
+  }
+
+  .hero-panel:hover .cta-work,
+  .hero-panel:focus-visible .cta-work {
+    background: var(--navy-light);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cta-button,
+    .arrow-circle {
+      transition: none;
+    }
+  }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 800px) {
+    .site-header {
+      grid-template-columns: 1fr;
+      justify-items: center;
+      gap: 14px;
+      padding: 16px 20px;
+    }
+
+    .logo {
+      justify-self: center;
+      text-align: center;
+    }
+
+    .main-nav {
+      gap: 24px;
+    }
+
+    .header-cta {
+      justify-self: center;
+    }
+
+    .hero-split {
+      flex-direction: column;
+    }
+
+    .hero-panel {
+      min-height: 320px;
+    }
+  }
+
+  @media (max-width: 420px) {
+    .main-nav {
+      gap: 18px;
+    }
+
+    .main-nav a {
+      font-size: 13px;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <!-- ================= HEADER ================= -->
+  <header class="site-header">
+    <div class="logo">
+      <div class="logo-main">COMMUNE</div>
+      <div class="logo-sub">at ROSE APPLE SQUARE</div>
+    </div>
+
+    <nav class="main-nav" aria-label="Primary">
+      <a href="/live">LIVE</a>
+      <a href="/work">WORK</a>
+      <a href="/gather" class="nav-gather">GATHER</a>
+    </nav>
+
+    <div class="header-cta">
+      <a href="/gather" class="venue-button">Book our venue</a>
+    </div>
+  </header>
+
+  <!-- ================= HERO: LIVE / WORK SPLIT ================= -->
+  <!-- Each panel is a single <a> (the whole photo is clickable). The CTA
+       inside is a <span> styled as a button, not a nested <a> — nesting
+       interactive elements is invalid HTML and breaks screen readers. -->
+  <section class="hero-split">
+
+    <!-- ---- LIVE panel ---- -->
+    <a href="/live" class="hero-panel" aria-label="Commune Live — colive with us">
+      <!-- DEV: replace with <img class="hero-img"> of the co-living lounge photo — see DEV NOTE above -->
+      <div class="img-placeholder"><span>Image: Live lounge</span></div>
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <div class="hero-title">COMMUNE<span class="accent">LIVE</span></div>
+        <span class="cta-button cta-live">
+          COLIVE WITH US
+          <span class="arrow-circle" aria-hidden="true">&#8594;</span>
+        </span>
+      </div>
+    </a>
+
+    <!-- ---- WORK panel ---- -->
+    <a href="/work" class="hero-panel" aria-label="Commune Work — cowork with us">
+      <!-- DEV: replace with <img class="hero-img"> of the coworking space photo — see DEV NOTE above -->
+      <div class="img-placeholder"><span>Image: Work space</span></div>
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <div class="hero-title">COMMUNE<span class="accent">WORK</span></div>
+        <span class="cta-button cta-work">
+          COWORK WITH US
+          <span class="arrow-circle" aria-hidden="true">&#8594;</span>
+        </span>
+      </div>
+    </a>
+
+  </section>
+
+</body>
+</html>
