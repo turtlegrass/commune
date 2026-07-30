@@ -21,10 +21,17 @@
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
+  html, body {
+    height: 100%;
+  }
+
   body {
     font-family: 'Helvetica Neue', Arial, sans-serif;
     color: var(--text-dark);
     background: var(--cream);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
   }
 
   /* Consistent, visible focus state for all keyboard-navigable elements */
@@ -141,6 +148,7 @@
   /* ---------- HERO SPLIT ---------- */
   .hero-split {
     display: flex;
+    flex: 1;
     min-height: 520px;
   }
 
